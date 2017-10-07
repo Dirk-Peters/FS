@@ -14,7 +14,7 @@ namespace chat_server.Domain
         {
         }
 
-        public Session(SessionToken token, Sender owner, Message[] messages)
+        private Session(SessionToken token, Sender owner, Message[] messages)
         {
             Token = token;
             this.owner = owner;

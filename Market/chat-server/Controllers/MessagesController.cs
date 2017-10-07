@@ -12,10 +12,10 @@ namespace chat_server.Controllers
 
         public MessagesController(ISessionRepository sessions) => this.sessions = sessions;
 
-        [HttpPut("{session}")]
-        public object Put(string session, string message) =>
+        [HttpPost("{session}")]
+        public object Post(string session, string message) =>
             sessions.Load(new SessionToken(session))?
-                .SendToAll(message, sessions.All())
+                .SendToAll(message, sessions.All().Except(new[] {sessions.Load(new SessionToken(session))}))
                 .Select(s => sessions.Save(s))
                 .Last().Last().Serialize((timestamp, sender, content) =>
                     new {Timestamp = timestamp, Sender = sender.Value, Message = content});

@@ -9,6 +9,11 @@ namespace chat_server.Persistence
         private readonly ConcurrentDictionary<SessionToken, Session> sessions =
             new ConcurrentDictionary<SessionToken, Session>();
 
+        public void Delete(SessionToken token)
+        {
+            sessions.TryRemove(token, out var value);
+        }
+
         public Session Load(SessionToken token) => sessions.GetValueOrDefault(token);
 
         public Session Create(SessionToken token, Sender owner) =>

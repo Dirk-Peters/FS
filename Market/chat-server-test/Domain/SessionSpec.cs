@@ -54,13 +54,4 @@ namespace chat_server_test.Domain
         public void Tokens_with_same_value_are_equal() =>
             new SessionToken("test").Should().Be(new SessionToken("test"));
     }
-
-    public static class Senders
-    {
-        public static Sender Bob() => New("Bob");
-
-        public static Sender Alice() => New("Alice");
-
-        public static Sender New(string name) => new Sender(name);
-    }
 }

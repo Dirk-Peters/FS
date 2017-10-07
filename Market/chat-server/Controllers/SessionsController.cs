@@ -14,5 +14,11 @@ namespace chat_server.Controllers
         [HttpPost]
         public string Post(string userName) =>
             sessions.Create(SessionToken.Any(), new Sender(userName)).Token.Value;
+
+        [HttpDelete("/{token}")]
+        public void Delete(string token)
+        {
+            sessions.Delete(new SessionToken(token));
+        }
     }
 }

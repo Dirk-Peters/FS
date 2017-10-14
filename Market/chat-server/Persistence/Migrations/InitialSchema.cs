@@ -3,7 +3,7 @@
 namespace chat_server.Persistence.Migrations
 {
     [Migration(1)]
-    public sealed class InitialSchema : MigrationBase
+    public sealed class InitialSchema : Migration
     {
         public override void Up()
         {
@@ -14,7 +14,7 @@ namespace chat_server.Persistence.Migrations
 
         public override void Down()
         {
-            //TODO
+            Delete.Table("Sessions");
         }
     }
 }

@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace chat_server.Domain
 {
-    public sealed class Session
+    public sealed class Session : ISession
     {
         private readonly Message[] messages;
         private readonly Sender owner;
@@ -23,17 +23,22 @@ namespace chat_server.Domain
 
         public SessionToken Token { get; }
 
-        public Session Append(Message message) => new Session(Token, owner, messages.Concat(new[] {message}).ToArray());
+        public bool IsValid => true;
 
-        public IEnumerable<Message> Page(int start, int count) => messages.Skip(start).Take(count);
+        public Session Append(Message message) 
+            => new Session(Token, owner, messages.Concat(new[] {message}).ToArray());
 
-        public Message Last() => Page(messages.Length - 1, 1).SingleOrDefault();
+        public IEnumerable<Message> Page(int start, int count) 
+            => messages.Skip(start).Take(count);
+
+        public Message Last() 
+            => Page(messages.Length - 1, 1).SingleOrDefault();
 
         public IEnumerable<Session> SendToAll(string content, IEnumerable<Session> recipients)
-        {
-            var message = new Message(owner, content, DateTime.Now);
-            return recipients.Select(r => r.Append(message)).Concat(new[] {Append(message)});
-        }
+            => SendToAll(new Message(owner, content, DateTime.Now), recipients);
+
+        private IEnumerable<Session> SendToAll(Message message, IEnumerable<Session> recipients)
+            => recipients.Select(r => r.Append(message)).Concat(new[] {Append(message)});
 
         public override bool Equals(object obj)
         {

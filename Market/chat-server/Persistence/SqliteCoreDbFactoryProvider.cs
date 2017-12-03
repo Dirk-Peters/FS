@@ -1,5 +1,4 @@
 ﻿using System.Data.Common;
-using System.Data.SQLite;
 using Microsoft.Data.Sqlite;
 
 namespace chat_server.Persistence
@@ -12,7 +11,7 @@ namespace chat_server.Persistence
             SqliteFactory.Instance.CreateCommand();
 
         public override DbCommandBuilder CreateCommandBuilder() =>
-            new SQLiteCommandBuilder();
+            null;
 
         public override DbConnection CreateConnection() =>
             SqliteFactory.Instance.CreateConnection();
@@ -21,11 +20,13 @@ namespace chat_server.Persistence
             SqliteFactory.Instance.CreateConnectionStringBuilder();
 
         public override DbDataAdapter CreateDataAdapter() =>
-            new SQLiteDataAdapter();
+            new EmptyDataAdapter();
 
         public override DbDataSourceEnumerator CreateDataSourceEnumerator() => null;
 
         public override DbParameter CreateParameter() =>
             SqliteFactory.Instance.CreateParameter();
+        
+        private sealed class EmptyDataAdapter : DbDataAdapter{}
     }
 }

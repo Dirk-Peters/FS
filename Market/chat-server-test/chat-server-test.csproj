@@ -11,7 +11,6 @@
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.5.0-preview-20170923-02" />
     <PackageReference Include="NUnit" Version="3.8.1" />
     <PackageReference Include="NUnit3TestAdapter" Version="3.8.0" />
-    <PackageReference Include="System.Data.SQLite.Core" Version="1.0.105.2" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\chat-server\chat-server.csproj" />
